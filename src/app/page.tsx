@@ -1,8 +1,9 @@
+import { Introduction } from "@/widgets/Introduction";
+
 export default function Home() {
   return (
     <div className="">
-      Text
-      {/* <Button text="Hello" /> */}
+      <Introduction/>
     </div>
   );
 }

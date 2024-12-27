@@ -1,0 +1,40 @@
+.IntroBlock{
+    padding-top: 100px;
+    height: 1080px;
+    background-color: var(--black);
+}
+
+.Intro__container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.Intro__wrapper{
+    display:flex;
+    flex-direction: column;
+    gap:50px;
+}
+
+.headline{
+    font-family: var(--ActayWide);
+    color: var(--white);
+    font-size: 96px;
+    max-width: 750px;
+    margin-top: 150px;
+}
+
+.Intoduction_desc{
+    font-family: var(--ActayWide);
+    color: var(--white);
+    font-size:36px;
+    width: 750px;
+}
+
+.Introduction_btns{
+    display: flex;
+    gap: 50px;
+}
+
+.Intro_humanImg{
+    margin-top: 60px;
+}
