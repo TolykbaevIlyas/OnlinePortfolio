@@ -38,3 +38,9 @@
 .Intro_humanImg{
     margin-top: 60px;
 }   
+
+@media screen and (max-width: 1000px) {
+    .Intro_humanImg{
+        display: none;
+    }  
+}

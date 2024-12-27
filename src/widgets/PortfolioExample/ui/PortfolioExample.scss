@@ -48,3 +48,16 @@
     grid-template-columns: repeat(2,1fr);
     gap:35px;
 }
+
+
+@media screen and (max-width:1500px) {
+    .PortfolioBlock{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap:40px;
+        margin: 0 auto;
+    }
+    .PortfolioBox{
+        margin: 0 auto;
+    }
+}

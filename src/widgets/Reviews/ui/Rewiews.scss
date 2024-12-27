@@ -32,3 +32,18 @@
     max-width: 290px;
     height: 58px;
 }
+
+@media screen and (max-width:1500px) {
+    .ReviewsBlock{
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: space-between;
+        gap: 100px;
+        margin-top: 50px;
+    }
+    .rewiews_box{
+        max-width:100vh;
+        margin:0 auto;
+    }
+    
+}

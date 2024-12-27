@@ -2,9 +2,9 @@ import React from 'react'
 import { IBtn } from '../types/types'
 import "./Button.scss"
 
-const Button = ({text,type = "Bg"}: IBtn) => {
+const Button = ({text,type = "Bg",types = "button"}: IBtn) => {
   return (
-    <button className={`Btn ${type == "Bg" ? "BgStyles" : "TransparentStyles"}`}>{text}</button>
+    <button type={types} className={`Btn ${type == "Bg" ? "BgStyles" : "TransparentStyles"}`}>{text}</button>
   )
 }
 

@@ -2,3 +2,17 @@
     display: flex;
     justify-content: space-between;
 }
+
+@media screen and (max-width: 1500px) {
+    .Feedback_block{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items:center;
+        gap:40px;
+        & > img {
+            max-width: 800px;
+        } 
+    }
+    
+}

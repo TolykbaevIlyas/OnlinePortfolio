@@ -1,0 +1,58 @@
+.ProfileBlock{
+    padding-top: 200px;
+}
+
+.ProfileInfo{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
+}
+
+.Profile_info_block{
+    display: flex;
+    flex-direction: column;
+    font-family: var(--ActayWide);
+    gap:20px;
+}
+
+.profile_name{
+    font-size: 40px;
+}
+.profile_role{
+    font-size: 28px;
+    color: var(--accentColor);
+}
+
+.about_me{
+    font-size: 36px;
+}
+
+.profile_desc{
+    font-size:20px;
+}
+
+
+.ProfilePortfolio{
+    margin-top: 40px;
+    display:grid;
+    grid-template-columns: .33fr 1fr;
+}
+
+.Profile_info{
+    font-family: var(--ActayWide);
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.Profile_info_main{
+    font-size:28px;
+}
+
+.Profile_info_list{
+    font-size: 20px;
+    color:#50526F;
+}
+
+.Portfolio{
+    font-family: var(--ActayWide);
+}

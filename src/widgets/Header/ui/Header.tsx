@@ -8,13 +8,15 @@ const Header = () => {
   return (
     <header>
         <Container className="header">
-            <h1 className='Logo'>OnlinePort</h1>
+            <a href="/" className='Logo'>OnlinePort</a>
             <nav className='navBar'>
               <li>Поиск</li>
               <li></li>
               <li></li>
               <li></li>
-              <Button text="Войти"/>
+              <a href="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Button text="Войти"/>
+              </a>
             </nav>
             
         </Container>

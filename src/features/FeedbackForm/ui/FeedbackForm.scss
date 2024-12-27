@@ -1,0 +1,27 @@
+.FeedbackForm{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+    max-height: 600px;
+    background-color: var(--blockBgColor);
+    border: var(--borderColor) 4px solid;
+    border-radius:10px;
+    padding: 50px;
+    gap:20px;
+    & > label{
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+        font-family: var(--ActayWide);
+        font-size:25px;
+        & > input{
+            background-color: #F4F5FB;
+            border: #D0D3F1 4px solid;
+            width: 600px;
+            height: 82px;
+            border-radius: 10px;
+            padding: 0 20px;
+        }
+    }
+}
