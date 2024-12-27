@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: "ActayWide";  
+  src: url("/assets/Fonts/ActayWide.otf") format("opentype"); 
+}
+
+@font-face {
+  font-family: "Rostov";  
+  src: url("/assets/Fonts/Rostov.ttf") format("truetype"); 
+}
+
+:root{
+  --ActayWide: "ActayWide", sans-serif;
+  --Rostov: "Rostov", sans-serif;
+  --white: #F4F5FB;
+  --accentColor: #3D50FF;
+}
