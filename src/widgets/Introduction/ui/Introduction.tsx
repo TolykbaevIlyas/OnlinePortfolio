@@ -21,7 +21,7 @@ const Introduction = () => {
             </div>
             <div className='Intro_humanImg'>
                 <img src="/assets/Images/MainPage/Introduction/sitting-2.png
-                " alt="" />
+                " alt="Human" />
             </div>
         </Container>
     </div>

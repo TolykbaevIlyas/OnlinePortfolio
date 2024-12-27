@@ -1,0 +1,34 @@
+.ReviewsBlock{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: space-between;
+    gap: 100px;
+    margin-top: 50px;
+}
+
+.rewiews_box{
+    display: flex;
+    max-width: 800px;
+    gap:20px;
+}
+
+.rewiew_name{
+    font-family: var(--ActayWide);
+    font-size: 40px;
+}
+
+.rewiew_desc{
+    font-family: var(--ActayWide);
+    font-size: 20px;
+}
+
+.rewiew_text_box{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.rewiew_start{
+    max-width: 290px;
+    height: 58px;
+}

@@ -1,0 +1,50 @@
+.PortfolioBlock{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:10x;
+}
+
+.PortfolioBox{
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    gap:50px;
+    background-color: var(--blockBgColor);
+    border: var(--borderColor) 4px solid;
+    border-radius:10px;
+    padding: 40px 20px;
+
+}
+
+.ProfileBlock{
+    display: flex;
+    gap:28px;
+}
+
+.profile_info{
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.Profile_img{
+    max-width: 148px;
+    height: 143px;
+}
+
+.profile_name{
+    font-family: var(--ActayWide);
+    font-size:40px;
+}
+
+.profile_role{
+    font-family: var(--ActayWide);
+    font-size: 32px;
+    color:var(--accentColor)
+}
+
+.PortfolioImg{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:35px;
+}
