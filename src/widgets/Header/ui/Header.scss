@@ -17,3 +17,13 @@ header{
     align-items: center;
     padding: 15px 0;
 }
+
+.navBar{
+    list-style-type: none;
+    display:flex;
+    gap:10px;
+    font-family: var(--ActayWide);
+    font-size: 20px;
+    text-align: center;
+    align-items:center;
+}

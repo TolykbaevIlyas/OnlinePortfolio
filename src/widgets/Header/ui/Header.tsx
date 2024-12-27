@@ -9,7 +9,14 @@ const Header = () => {
     <header>
         <Container className="header">
             <h1 className='Logo'>OnlinePort</h1>
-            <Button text="Войти"/>
+            <nav className='navBar'>
+              <li>Поиск</li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <Button text="Войти"/>
+            </nav>
+            
         </Container>
     </header>
   )
