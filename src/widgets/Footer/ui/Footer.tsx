@@ -1,8 +1,14 @@
+'use client'
+import { Container } from '@/shared/ui/Container'
 import React from 'react'
 
 const Footer = () => {
   return (
-    <footer>Footer</footer>
+    <footer>
+      <Container>
+        Footer
+      </Container>
+    </footer>
   )
 }
 

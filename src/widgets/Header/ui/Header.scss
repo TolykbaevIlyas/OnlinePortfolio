@@ -1,0 +1,16 @@
+header{
+    background-color: var(--white);
+}
+.Logo{
+    font-family: var(--Rostov);
+    font-size: 30px;
+    color:var(--black)
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    padding: 15px 0;
+}
