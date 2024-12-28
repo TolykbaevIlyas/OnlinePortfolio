@@ -25,6 +25,7 @@ interface ProjectWithImage extends Project {
 const CandidateInfo = () => {
   const [candidateData, setCandidateData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
   // Для управления popup сообщениями
@@ -178,6 +179,7 @@ const CandidateInfo = () => {
 
   // Открыть форму добавления проекта
   const handleAddProject = () => {
+
     setEditingProject(null);
     // Очищаем поля
     setProjectName('');
@@ -186,6 +188,8 @@ const CandidateInfo = () => {
     setProjectCompletedDate('');
     setAttachedFiles([]);
     setIsProjectFormOpen(true);
+
+    setIsButtonDisabled(true);
   };
 
   // Открыть форму редактирования проекта (по кнопке в детальном окне)
@@ -316,6 +320,8 @@ const CandidateInfo = () => {
 
   const canManage = candidateData.userId === currentUserId;
 
+  // console.log(candidateData)
+
   return (
     <div className="CandidateBlock">
       <div className="CandidateInfo">
@@ -348,9 +354,9 @@ const CandidateInfo = () => {
             Описание: {candidateData.experienceDescription}
           </p>
           <p className="experience_dates">
-            Период: {candidateData.experienceStartDate} —{' '}
-            {candidateData.experienceEndDate}
-          </p>
+  Период: {candidateData.experienceStartDate.split('T')[0]} —{' '}
+  {candidateData.experienceEndDate.split('T')[0]}
+</p>
         </div>
       </div>
 
@@ -404,6 +410,7 @@ const CandidateInfo = () => {
             className="btn"
             style={{ marginBottom: '20px' }}
             onClick={handleAddProject}
+            disabled={isButtonDisabled}
           >
             Добавить проект
           </button>
