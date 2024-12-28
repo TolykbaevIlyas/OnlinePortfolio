@@ -5,18 +5,23 @@ import React from 'react'
 import "./Header.scss"
 
 const Header = () => {
+
+  const userId = localStorage.getItem('userId');
+  console.log(userId);
+
   return (
     <header>
         <Container className="header">
             <a href="/" className='Logo'>OnlinePort</a>
             <nav className='navBar'>
-              <li>Поиск</li>
+              <a href="/search">Поиск</a>
               <li></li>
               <li></li>
               <li></li>
-              <a href="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+              {userId ?  <></> : <a href="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Button text="Войти"/>
-              </a>
+              </a> }
+             
             </nav>
             
         </Container>
