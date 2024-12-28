@@ -88,7 +88,7 @@ const LoginForm = () => {
               },
             })}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
         </label>
 
         {/* Кнопка отправки */}

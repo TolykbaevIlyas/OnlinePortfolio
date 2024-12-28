@@ -7,7 +7,7 @@ const Introduction = () => {
   return (
     <div className='IntroBlock'>
         <Container className='Intro__container'>
-            <div className='Intro__wrapper'>
+            <article className='Intro__wrapper'>
                 <h1 className='headline'>
                     Сайт онлайн портфолио
                 </h1>
@@ -18,7 +18,7 @@ const Introduction = () => {
                     <Button type="Bg" text='Создать портфолио'/>
                     <Button type="Transparent" text="Найти портфолио"/>
                 </div>
-            </div>
+            </article>
             <div className='Intro_humanImg'>
                 <img src="/assets/Images/MainPage/Introduction/sitting-2.png
                 " alt="Human" />

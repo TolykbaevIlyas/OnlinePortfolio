@@ -8,11 +8,11 @@ const Advantages = () => {
   return (
     <Container className='AdvantagesWrapper'>
         <Headline text='Наши преимущества'/>
-        <div className='Advantages__Blocks'>
+        <section className='Advantages__Blocks'>
             {data.map(dat => (
                 <div key={dat.id} className='Advatages_box'></div>
             ))}
-        </div>
+        </section>
     </Container>
   )
 }

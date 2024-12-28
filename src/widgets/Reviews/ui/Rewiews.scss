@@ -33,6 +33,30 @@
     height: 58px;
 }
 
+.ReviewsBlock {
+    .slick-dots {
+      bottom: -20px;
+    }
+  
+    .slick-prev,
+    .slick-next {
+      z-index: 10;
+      &:before {
+        color: #000; // Цвет стрелок
+      }
+    }
+  
+    .rewiews_box {
+      text-align: center;
+      padding: 20px;
+    }
+  
+    .rewiew_text_box {
+      margin-top: 15px;
+    }
+  }
+  
+
 @media screen and (max-width:1500px) {
     .ReviewsBlock{
         display: grid;

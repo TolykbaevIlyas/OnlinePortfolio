@@ -1,39 +1,47 @@
-'use client'
-import { useState } from "react";
-import axios from "axios";
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Импортируем useRouter
+import axios from 'axios';
 
 const SearchPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState([]);
   const [isFilterPopupVisible, setFilterPopupVisible] = useState(false);
   const [filters, setFilters] = useState({
-    WorkExperience: "",
-    Age: "",
-    Tags: "",
+    WorkExperience: '',
+    Age: '',
+    Tags: '',
   });
+  const router = useRouter(); // Инициализируем роутер
 
   const handleSearch = async () => {
     try {
       const queryParams = new URLSearchParams();
-      if (filters.WorkExperience) queryParams.append("WorkExperience", filters.WorkExperience);
-      if (filters.Tags) queryParams.append("Tags", filters.Tags);
-      queryParams.append("Speciality", searchQuery || ""); // Специализация из строки поиска
+      if (filters.WorkExperience) queryParams.append('WorkExperience', filters.WorkExperience);
+      if (filters.Tags) queryParams.append('Tags', filters.Tags);
+      queryParams.append('Speciality', searchQuery || ''); // Специализация из строки поиска
 
       const response = await axios.get(
-        `https://4e06-37-99-64-195.ngrok-free.app/api/Resumes/fetch?${queryParams.toString()}`
+        `https://4a51-37-99-64-195.ngrok-free.app/api/Resumes/fetch?${queryParams.toString()}`,
+        {
+          headers: {
+            'ngrok-skip-browser-warning': true,
+          },
+        }
       );
       const { resumes } = response.data;
 
       const formattedResults = resumes.map(resume => ({
+        id: resume.id, // Уникальный идентификатор пользователя
         name: resume.name,
         position: resume.speciality,
         about: `${resume.experienceName} at ${resume.experienceEmployer}`,
-        image: "/assets/Images/Search/PepleImg.png", // Заменить, если фото приходит из API
+        image: '/assets/Images/Search/PepleImg.png', // Заменить, если фото приходит из API
       }));
 
       setResults(formattedResults);
     } catch (error) {
-      console.error("Ошибка при загрузке данных:", error);
+      console.error('Ошибка при загрузке данных:', error);
     }
   };
 
@@ -41,12 +49,16 @@ const SearchPage = () => {
     setFilterPopupVisible(!isFilterPopupVisible);
   };
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = e => {
     const { name, value } = e.target;
-    setFilters((prev) => ({
+    setFilters(prev => ({
       ...prev,
       [name]: value,
     }));
+  };
+
+  const navigateToProfile = id => {
+    router.push(`/profile?id=${id}`);
   };
 
   return (
@@ -56,7 +68,7 @@ const SearchPage = () => {
           type="text"
           placeholder="ПОИСК"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={e => setSearchQuery(e.target.value)}
           className="search-input"
         />
         <button onClick={handleSearch} className="search-button">
@@ -114,7 +126,12 @@ const SearchPage = () => {
               <h3>{result.name}</h3>
               <p className="position">@{result.position}</p>
               <p className="about">{result.about}</p>
-              <button className="details-button">Подробнее</button>
+              <button
+                className="details-button"
+                onClick={() => navigateToProfile(result.id)}
+              >
+                Подробнее
+              </button>
             </div>
           </div>
         ))}
@@ -240,3 +257,4 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
+

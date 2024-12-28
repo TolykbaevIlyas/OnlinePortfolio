@@ -26,7 +26,7 @@ const RegistrationForm = () => {
       const { firstName, lastName, email, password } = data;
 
       // Формируем URL с параметрами
-      const url = `https://4a51-37-99-64-195.ngrok-free.app/api/Auth/signup`;
+      const url = `ttps://4a51-37-99-64-195.ngrok-free.app/api/Auth/signup`;
 
       // Отправляем POST запрос с параметрами в URL
       const response = await axios.post(url, null, {
