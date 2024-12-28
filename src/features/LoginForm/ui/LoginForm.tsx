@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/shared/ui/Button';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Импортируем useRouter
-import { toast, ToastContainer } from 'react-toastify'; // Импортируем toast
-import 'react-toastify/dist/ReactToastify.css'; // Импортируем стили для Toast
+import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './LoginForm.scss';
 
 const LoginForm = () => {
@@ -13,66 +13,65 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setFocus,
   } = useForm();
 
-  const [isClient, setIsClient] = useState(false); // Для проверки клиентской стороны
-  const router = useRouter(); // Инициализируем useRouter
+  const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
 
-  // Проверяем, на клиенте ли мы
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   const onSubmit = async (data) => {
     try {
+      if (Object.keys(errors).length > 0) {
+        const firstErrorField = Object.keys(errors)[0];
+        setFocus(firstErrorField);
+        return;
+      }
+
       const { login, password } = data;
       const url = `https://4a51-37-99-64-195.ngrok-free.app/api/Auth/signin`;
-  
-      // Отправка данных через POST
+
       const response = await axios.post(url, null, {
         params: {
           email: login,
           password: password,
         },
         headers: {
-          'ngrok-skip-browser-warning': true, // Добавляем заголовок
+          'ngrok-skip-browser-warning': true,
         },
       });
-  
-      console.log('Response:', response.data);
-  
-      // Сохраняем ID в localStorage
-      const userId = response.data; // Предполагаем, что ID приходит в response.data.id
+
+      const userId = response.data; // Предполагаем, что ID приходит в response.data
       localStorage.setItem('userId', userId);
-  
-      toast.success('Авторизация успешна!'); // Уведомление об успехе
-  
-      // Перенаправляем на страницу профиля
-      if (isClient) {
-        router.push(`/profile?id=${userId}`);
-      }
+
+      toast.success('Авторизация успешна!');
+      router.push(`/profile?id=${userId}`);
     } catch (error) {
       console.error('Error during sign-in:', error);
-      toast.error('Ошибка при авторизации. Проверьте логин и пароль.'); // Уведомление об ошибке
+      toast.error('Ошибка при авторизации. Проверьте логин и пароль.');
     }
   };
 
   if (!isClient) {
-    return null; // или можно показать загрузочный индикатор
+    return null;
   }
 
   return (
     <div className="LoginContainer">
-      <ToastContainer /> {/* Контейнер для уведомлений */}
+      <ToastContainer />
       <form className="LoginForm" onSubmit={handleSubmit(onSubmit)}>
         {/* Поле Логин */}
         <label>
           Почта:
           <input
             type="text"
+            className={errors.login ? 'error' : ''}
             {...register('login', { required: 'Логин обязателен' })}
           />
-          {errors.login && <p>{errors.login.message}</p>}
+          {errors.login && <p className="error-message">{errors.login.message}</p>}
         </label>
 
         {/* Поле Пароль */}
@@ -80,18 +79,29 @@ const LoginForm = () => {
           Пароль:
           <input
             type="password"
+            className={errors.password ? 'error' : ''}
             {...register('password', {
               required: 'Пароль обязателен',
               minLength: {
                 value: 6,
                 message: 'Пароль должен содержать минимум 6 символов',
               },
+              validate: {
+                hasUpperCase: (value) =>
+                  /[A-Z]/.test(value) || 'Пароль должен содержать хотя бы одну заглавную букву',
+                hasLowerCase: (value) =>
+                  /[a-z]/.test(value) || 'Пароль должен содержать хотя бы одну строчную букву',
+                hasNumber: (value) =>
+                  /\d/.test(value) || 'Пароль должен содержать хотя бы одну цифру',
+                hasSpecialChar: (value) =>
+                  /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Пароль должен содержать хотя бы один специальный символ',
+              },
             })}
           />
-          {errors.password && <p style={{color:"red"}}>{errors.password.message}</p>}
+          {errors.password && <p className="error-message">{errors.password.message}</p>}
         </label>
 
-        {/* Кнопка отправки */}
+        {/* Кнопка и ссылка */}
         <a href="/register">Регистрация</a>
         <Button text="Войти" types="submit" />
       </form>

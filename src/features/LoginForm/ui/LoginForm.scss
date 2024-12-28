@@ -6,6 +6,18 @@
     width: 100%; /* Ширина контейнера на всю ширину экрана */
     background-color: #f9f9f9; /* Фон страницы (по желанию) */
 }
+
+.error {
+    border: 1px solid red;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+
 .LoginForm{
     display: flex;
     flex-direction: column;

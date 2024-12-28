@@ -1,20 +1,32 @@
-import { Container } from '@/shared/ui/Container'
-import { Headline } from '@/shared/ui/Headline'
-import React from 'react'
-import "./Advantages.scss"
+'use client';
+import { Container } from '@/shared/ui/Container';
+import { Headline } from '@/shared/ui/Headline';
+import React from 'react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import './Advantages.scss';
+import { SliderSwiper } from '@/shared/ui/SliderSwiper';
 
 const Advantages = () => {
-    const data=[{id:1},{id:2},{id:3},{id:4},{id:5},{id:6}]
-  return (
-    <Container className='AdvantagesWrapper'>
-        <Headline text='Наши преимущества'/>
-        <section className='Advantages__Blocks'>
-            {data.map(dat => (
-                <div key={dat.id} className='Advatages_box'></div>
-            ))}
-        </section>
-    </Container>
-  )
-}
+ 
+  const img = [
+    { src: "/assets/Images/Profile/profileImg.png", alt: "Первое изображение Тольятти" },
+    { src: "/assets/Images/Profile/Mars.jpg", alt: "Первое изображение Тольятти" },
+    { src: "/assets/Images/Profile/Baisa.jpg", alt: "Первое изображение Тольятти" },
+    { src: "/assets/Images/Profile/Said.jpg", alt: "Первое изображение Тольятти" }
+  ]
+  
 
-export default Advantages
+  return (
+    <>
+    <Container className="AdvantagesWrapper">
+      <Headline text="Наша Команда" />
+    </Container>
+    <SliderSwiper images={img}/>
+    </>
+    
+  );
+};
+
+export default Advantages;

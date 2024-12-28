@@ -1,0 +1,64 @@
+/* styles.css or your component's CSS */
+.slider-image {
+  width: 100%; /* Makes the image responsive */
+  height: auto; /* Keeps the aspect ratio of the image intact */
+  object-fit: cover; /* Ensures the image covers the entire area */
+  display: block; /* Removes any unwanted inline spacing */
+  margin: 0 auto; /* Centers the image horizontally */
+  width: 500px;
+  height: 500px;
+  border-radius:10px;  
+}
+
+// @media screen and (max-width:1466px) {
+//   .slider-image {
+//     width: 500px;
+//     height: 500px;
+//   }
+// }
+
+// /* Media query for tablets */
+// /* Media query for devices with a width of 769px or more (Tablet and Desktop) */
+// @media (max-width: 769px) {
+//   .slider-image {
+//     width: 734px;
+//     height: 550px;
+//   }
+// }
+
+// /* Media query for devices with a width of 481px to 768px (Tablets and small desktops) */
+// @media (min-width: 482px) and (max-width: 769px) {
+//   .slider-image {
+//     width: 724px;
+//     height: 458px;
+//   }
+// }
+
+// /* Media query for mobile devices (less than 481px) */
+// @media (max-width: 481px) {
+//   .slider-image {
+//     width: 448px;
+//     height: 411px;
+//   }
+// }
+
+.swiper-pagination .swiper-pagination-bullet {
+  width: 50px !important;
+  height: 3px !important;
+  background-color: var(--darkBlue) !important;
+  border-radius: 0 !important;
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  background-color: var(--dark) !important; /* Цвет активной точки */
+}
+
+.swiper {
+  padding-bottom: 20px; /* Оставляем место под слайдером для пагинации */
+}
+
+.swiper-pagination {
+  position: relative;
+  margin-top: 1px;
+  text-align: center;
+}

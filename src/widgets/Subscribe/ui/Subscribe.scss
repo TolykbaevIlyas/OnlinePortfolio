@@ -1,0 +1,63 @@
+
+.pricing-table {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-table th, .pricing-table td {
+    text-align: center;
+    padding: 15px;
+}
+
+.pricing-table th {
+    background-color: #f7f9fc;
+    color: #333;
+    font-size: 1.2em;
+    border-bottom: 2px solid #ccc;
+}
+
+.pricing-table td {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.free {
+    background-color: #e0f7fa;
+}
+
+.pro {
+    background-color: #ffecb3;
+}
+
+.super {
+    background-color: #ffe0b2;
+}
+
+.checkmark {
+    color: green;
+    font-weight: bold;
+}
+
+.crossmark {
+    color: red;
+    font-weight: bold;
+}
+
+.subscribe-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 1em;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    transition: background-color 0.3s;
+}
+
+.subscribe-btn:hover {
+    background-color: #0056b3;
+}

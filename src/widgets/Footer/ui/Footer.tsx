@@ -1,12 +1,13 @@
 'use client'
 import { Container } from '@/shared/ui/Container'
 import React from 'react'
+import "./Footer.scss"
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className='footer'>
       <Container>
-        Footer
+        Created by Baisangur and Ilyas 2024
       </Container>
     </footer>
   )

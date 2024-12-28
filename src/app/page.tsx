@@ -3,6 +3,7 @@ import { Feedback } from "@/widgets/Feedback";
 import { Introduction } from "@/widgets/Introduction";
 import { PortfolioExample } from "@/widgets/PortfolioExample";
 import { Reviews } from "@/widgets/Reviews";
+import { SubscriptionPlans } from "@/widgets/Subscribe";
 
 export default function Home() {
   return (
@@ -11,7 +12,8 @@ export default function Home() {
       <Advantages/>
       <Reviews/>
       <PortfolioExample/>
-      <Feedback/>
+      {/* <Feedback/> */}
+      <SubscriptionPlans/>
     </div>
   );
 }
