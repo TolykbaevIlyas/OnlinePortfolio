@@ -1,4 +1,3 @@
-'use client';
 import React, { useEffect, useState } from 'react';
 import './Profile.scss';
 import axios from 'axios';
@@ -11,6 +10,19 @@ const ProfileInfo = () => {
   const [messages, setMessages] = useState<any[]>([]); // Состояние для сообщений
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для попапа
+  const [newResume, setNewResume] = useState({
+    name: '',
+    speciality: '',
+    location: '',
+    experienceName: '',
+    experienceEmployer: '',
+    experienceResponsibilities: '',
+    experienceDescription: '',
+    experienceStartDate: '',
+    experienceEndDate: '',
+  });
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -76,6 +88,37 @@ const ProfileInfo = () => {
     fetchMessages();
   }, [finalUserId]);
 
+  const handleAddResume = async () => {
+    try {
+      const response = await axios.post(
+        `https://4a51-37-99-64-195.ngrok-free.app/api/Resumes/add`,
+        {
+          ...newResume,
+          userId: finalUserId,
+          socialMedia: {},
+        },
+        {
+          headers: { 'ngrok-skip-browser-warning': true },
+        }
+      );
+      setResumeList([...resumeList, response.data]); // Обновляем список резюме
+      setIsModalOpen(false); // Закрываем модальное окно
+      setNewResume({
+        name: '',
+        speciality: '',
+        location: '',
+        experienceName: '',
+        experienceEmployer: '',
+        experienceResponsibilities: '',
+        experienceDescription: '',
+        experienceStartDate: '',
+        experienceEndDate: '',
+      });
+    } catch (err: any) {
+      console.error('Ошибка при добавлении резюме:', err.message);
+    }
+  };
+
   if (loading) {
     return <p>Загрузка данных...</p>;
   }
@@ -88,7 +131,6 @@ const ProfileInfo = () => {
     <div className="ProfileBlock">
       {userData && (
         <div className="ProfileInfo">
-          {/* <img src="/assets/Images/Profile/profileImg.png" alt="Profile Image" /> */}
           <section className="Profile_info_block">
             <div>
               <h2 className="profile_name">
@@ -115,7 +157,6 @@ const ProfileInfo = () => {
                   <p>
                     <strong>Сообщение:</strong> {message.body}
                   </p>
-                  {/* Если есть время в ответе API */}
                   {message.createdAt && (
                     <p>
                       <strong>Время:</strong> {new Date(message.createdAt).toLocaleString()}
@@ -128,6 +169,9 @@ const ProfileInfo = () => {
         </div>
         <div>
           <h4 className="Profile_info_main">Мои резюме</h4>
+          <button className="add-resume-button" onClick={() => setIsModalOpen(true)}>
+            Добавить резюме
+          </button>
           <div className="ResumeList">
             {resumeList.length === 0 ? (
               <p>У вас пока нет резюме</p>
@@ -150,6 +194,76 @@ const ProfileInfo = () => {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Добавить новое резюме</h3>
+            <input
+              type="text"
+              placeholder="Название"
+              value={newResume.name}
+              onChange={(e) => setNewResume({ ...newResume, name: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Специальность"
+              value={newResume.speciality}
+              onChange={(e) => setNewResume({ ...newResume, speciality: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Локация"
+              value={newResume.location}
+              onChange={(e) => setNewResume({ ...newResume, location: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Опыт: название"
+              value={newResume.experienceName}
+              onChange={(e) => setNewResume({ ...newResume, experienceName: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Опыт: работодатель"
+              value={newResume.experienceEmployer}
+              onChange={(e) => setNewResume({ ...newResume, experienceEmployer: e.target.value })}
+            />
+            <textarea
+              placeholder="Опыт: обязанности"
+              value={newResume.experienceResponsibilities}
+              onChange={(e) =>
+                setNewResume({ ...newResume, experienceResponsibilities: e.target.value })
+              }
+            />
+            <textarea
+              placeholder="Опыт: описание"
+              value={newResume.experienceDescription}
+              onChange={(e) =>
+                setNewResume({ ...newResume, experienceDescription: e.target.value })
+              }
+            />
+            <input
+              type="date"
+              placeholder="Начало работы"
+              value={newResume.experienceStartDate}
+              onChange={(e) =>
+                setNewResume({ ...newResume, experienceStartDate: e.target.value })
+              }
+            />
+            <input
+              type="date"
+              placeholder="Окончание работы"
+              value={newResume.experienceEndDate}
+              onChange={(e) =>
+                setNewResume({ ...newResume, experienceEndDate: e.target.value })
+              }
+            />
+            <button onClick={handleAddResume}>Добавить</button>
+            <button onClick={() => setIsModalOpen(false)}>Закрыть</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

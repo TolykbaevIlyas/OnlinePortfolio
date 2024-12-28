@@ -13,7 +13,13 @@ interface Project {
   completedDate: string;
   resumeId: string;
   attachedFileIds: string[];
-  attachedFileUrls: string[];
+  attachedFileUrls: string[];   // в API это ссылки вида "/api/files/<id>"
+}
+
+// Если вам нужно отдельно хранить base64 картинки, то можно завести такой интерфейс.
+// Но если вы используете прямую ссылку (attachedFileUrls[0]) — это не обязательно.
+interface ProjectWithImage extends Project {
+  imageDataUrl?: string; // base64 или blob-URL
 }
 
 const CandidateInfo = () => {
@@ -27,17 +33,17 @@ const CandidateInfo = () => {
   // ------------------------
   //  Проекты
   // ------------------------
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectWithImage[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [projectsError, setProjectsError] = useState<string | null>(null);
 
   // Popup для деталей проекта
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectWithImage | null>(null);
   const [isProjectDetailsOpen, setIsProjectDetailsOpen] = useState(false);
 
   // Popup для добавления/редактирования проекта
   const [isProjectFormOpen, setIsProjectFormOpen] = useState(false);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [editingProject, setEditingProject] = useState<ProjectWithImage | null>(null);
 
   // Поля формы добавления/редактирования проекта
   const [projectName, setProjectName] = useState('');
@@ -95,7 +101,7 @@ const CandidateInfo = () => {
         if (!finalCandidateId) return;
         setProjectsLoading(true);
 
-        const response = await axios.get(
+        const response = await axios.get<Project[]>(
           `https://4a51-37-99-64-195.ngrok-free.app/api/Projects/fetch-by-resume/${finalCandidateId}`,
           {
             headers: {
@@ -103,7 +109,39 @@ const CandidateInfo = () => {
             },
           }
         );
-        setProjects(response.data);
+        const fetchedProjects = response.data;
+
+        // Если вам нужно явно загрузить каждую картинку через /api/Files/{fileId},
+        // то для каждого attachedFileId нужно сделать запрос и получить blob/base64.
+        // Примерно так (закомментировано, т.к. иногда достаточно просто <img src={attachedFileUrls[0]} />):
+        /*
+        const projectsWithImages = await Promise.all(
+          fetchedProjects.map(async (proj) => {
+            if (proj.attachedFileIds?.length) {
+              try {
+                // Допустим, берём только первый файл
+                const fileId = proj.attachedFileIds[0];
+                const fileResp = await axios.get(`/api/files/${fileId}`, {
+                  responseType: 'arraybuffer',
+                });
+                // Конвертируем массив байтов в base64
+                const base64 = Buffer.from(fileResp.data, 'binary').toString('base64');
+                const mimeType = fileResp.headers['content-type'] || 'image/jpeg';
+                const imageDataUrl = `data:${mimeType};base64,${base64}`;
+                return { ...proj, imageDataUrl };
+              } catch {
+                return { ...proj };
+              }
+            } else {
+              return { ...proj };
+            }
+          })
+        );
+        setProjects(projectsWithImages);
+        */
+        
+        // Если не нужно вручную забирать картинки, а достаточно использовать attachedFileUrls:
+        setProjects(fetchedProjects);
       } catch (err: any) {
         setProjectsError(err.message);
       } finally {
@@ -118,16 +156,24 @@ const CandidateInfo = () => {
   //   Хэндлеры для проектов
   // ========================
 
-  // Открыть детали проекта
-  const handleOpenProjectDetails = (project: Project) => {
-    setSelectedProject(project);
-    setIsProjectDetailsOpen(true);
+  // Открыть детали проекта (и сразу запросить детальную информацию по id)
+  const handleOpenProjectDetails = async (project: ProjectWithImage) => {
+    try {
+      const resp = await axios.get<ProjectWithImage>(
+        `https://4a51-37-99-64-195.ngrok-free.app/api/Projects/${project.id}`,
+        { headers: { 'ngrok-skip-browser-warning': true } }
+      );
+      setSelectedProject(resp.data);
+      setIsProjectDetailsOpen(true);
+    } catch (err: any) {
+      alert('Ошибка при загрузке деталей проекта: ' + err.message);
+    }
   };
 
   // Закрыть детали проекта
   const handleCloseProjectDetails = () => {
-    setIsProjectDetailsOpen(false);
     setSelectedProject(null);
+    setIsProjectDetailsOpen(false);
   };
 
   // Открыть форму добавления проекта
@@ -142,15 +188,19 @@ const CandidateInfo = () => {
     setIsProjectFormOpen(true);
   };
 
-  // Открыть форму редактирования проекта
-  const handleEditProject = (project: Project) => {
+  // Открыть форму редактирования проекта (по кнопке в детальном окне)
+  const handleEditProject = (project: ProjectWithImage) => {
     setEditingProject(project);
     setProjectName(project.name);
     setProjectDescription(project.description);
     setProjectClientName(project.clientName);
-    setProjectCompletedDate(project.completedDate.slice(0, 10)); // Чтоб удобнее было в input[type=date]
-    setAttachedFiles([]); // TODO: Загрузить файлы, если нужно
+    // completedDate может быть "2024-12-28T00:00:00",
+    // для input type="date" обрезаем время
+    setProjectCompletedDate(project.completedDate.slice(0, 10));
+    setAttachedFiles([]); // Здесь можно загрузить существующие, если нужно
     setIsProjectFormOpen(true);
+    // Закроем детальное окно, чтобы не было двух попапов наложения
+    handleCloseProjectDetails();
   };
 
   // Закрыть форму проекта
@@ -163,6 +213,7 @@ const CandidateInfo = () => {
   const handleSubmitProjectForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Собираем formData для загрузки файлов
     const formData = new FormData();
     formData.append('resumeId', finalCandidateId || '');
     formData.append('projectName', projectName);
@@ -170,12 +221,18 @@ const CandidateInfo = () => {
     formData.append('clientName', projectClientName);
     formData.append('completedDate', projectCompletedDate);
 
+    // Если в API требуется массив attachedFileIds для PUT, это отдельная логика.
+    // Но чаще всего при PUT мы либо тоже используем FormData с файлами,
+    // либо отправляем JSON. Зависит от бэкенда.  
+    // Для примера — используем тот же метод, что и при создании.
+
     attachedFiles.forEach((file) => {
       formData.append('projectCover', file);
     });
 
     try {
       if (editingProject) {
+        // Редактирование (PUT)
         await axios.put(
           `https://4a51-37-99-64-195.ngrok-free.app/api/Projects/${editingProject.id}`,
           formData,
@@ -183,7 +240,10 @@ const CandidateInfo = () => {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         );
+        // После успешного обновления, перезагрузим список
+        refreshProjectsList();
       } else {
+        // Создание (POST)
         const response = await axios.post(
           `https://4a51-37-99-64-195.ngrok-free.app/api/Projects/create`,
           formData,
@@ -191,13 +251,50 @@ const CandidateInfo = () => {
             headers: { 'Content-Type': 'multipart/form-data' },
           }
         );
-
+        // Обновим состояние, добавив новый проект
         setProjects((prev) => [...prev, response.data]);
       }
 
       handleCloseProjectForm();
     } catch (err: any) {
       alert('Ошибка при сохранении проекта: ' + err.message);
+    }
+  };
+
+  // Удаление проекта
+  const handleDeleteProject = async (projectId: string) => {
+    if (!window.confirm('Вы уверены, что хотите удалить этот проект?')) {
+      return;
+    }
+    try {
+      await axios.delete(
+        `https://4a51-37-99-64-195.ngrok-free.app/api/Projects/${projectId}`,
+        { headers: { 'ngrok-skip-browser-warning': true } }
+      );
+      // Уберём проект из списка
+      setProjects((prev) => prev.filter((p) => p.id !== projectId));
+      // Закроем детальное окно, если оно открыто
+      handleCloseProjectDetails();
+    } catch (err: any) {
+      alert('Ошибка при удалении проекта: ' + err.message);
+    }
+  };
+
+  // Хэлпер перезагрузки проектов
+  const refreshProjectsList = async () => {
+    try {
+      const response = await axios.get<ProjectWithImage[]>(
+        `https://4a51-37-99-64-195.ngrok-free.app/api/Projects/fetch-by-resume/${finalCandidateId}`,
+        {
+          headers: {
+            'ngrok-skip-browser-warning': true,
+          },
+        }
+      );
+      setProjects(response.data);
+    } catch (err) {
+      // Можно вывести ошибку в консоль или в UI
+      console.error(err);
     }
   };
 
@@ -231,7 +328,7 @@ const CandidateInfo = () => {
             <h2 className="candidate_name">{candidateData.name}</h2>
             <h4 className="candidate_role">@{candidateData.speciality}</h4>
           </div>
-          <p className="about_me">ID пользователя: {candidateData.userId}</p>
+          {/* <p className="about_me">ID пользователя: {candidateData.userId}</p> */}
           <p className="candidate_location">
             Местоположение: {candidateData.location}
           </p>
@@ -325,10 +422,13 @@ const CandidateInfo = () => {
                 className="ProjectCard"
                 onClick={() => handleOpenProjectDetails(project)}
               >
-                {/* Картинка проекта (если есть хотя бы одна ссылка) */}
+                {/* 
+                  Если вручную не загружаете blob/base64, а используете
+                  прямую ссылку (attachedFileUrls[0]), то можно так:
+                */}
                 {project.attachedFileUrls && project.attachedFileUrls.length > 0 ? (
                   <img
-                    src={project.attachedFileUrls[0]}
+                    src={`https://4a51-37-99-64-195.ngrok-free.app${project.attachedFileUrls[0]}`}
                     alt={project.name}
                     className="ProjectCardImage"
                   />
@@ -386,7 +486,7 @@ const CandidateInfo = () => {
                   onChange={(e) => setProjectCompletedDate(e.target.value)}
                 />
               </label>
-              <label>
+              {editingProject ? <></> : <label>
                 Загрузить файлы:
                 <input
                   type="file"
@@ -397,7 +497,8 @@ const CandidateInfo = () => {
                     }
                   }}
                 />
-              </label>
+              </label>}
+              
 
               <div style={{ marginTop: '10px' }}>
                 <button type="submit">
@@ -412,6 +513,54 @@ const CandidateInfo = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Popup детальной информации о проекте */}
+      {isProjectDetailsOpen && selectedProject && (
+        <div className="popup" onClick={handleCloseProjectDetails}>
+          <div 
+            className="popup-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Детальная информация о проекте</h3>
+            <p><strong>Название:</strong> {selectedProject.name}</p>
+            <p><strong>Описание:</strong> {selectedProject.description}</p>
+            <p><strong>Клиент:</strong> {selectedProject.clientName}</p>
+            <p><strong>Дата завершения:</strong> {selectedProject.completedDate}</p>
+            {/* <p><strong>ResumeId:</strong> {selectedProject.resumeId}</p>
+            <p><strong>attachedFileIds:</strong> {selectedProject.attachedFileIds.join(', ')}</p> */}
+
+            {/* Блок обложки (если есть) */}
+            {selectedProject.attachedFileUrls && selectedProject.attachedFileUrls.length > 0 && (
+              <div style={{ marginTop: '10px' }}>
+                <img
+                  src={`https://4a51-37-99-64-195.ngrok-free.app${selectedProject.attachedFileUrls[0]}`}
+                  alt="Project cover"
+                  style={{ width: '100%', maxHeight: '300px', objectFit: 'cover' }}
+                />
+              </div>
+            )}
+
+            {/* Если пользователь владелец резюме, показываем доп. кнопки */}
+            {canManage && (
+              <div style={{ marginTop: '20px' }}>
+                <button
+                  onClick={() => handleEditProject(selectedProject)}
+                  style={{ marginRight: '10px' }}
+                >
+                  Редактировать
+                </button>
+                <button onClick={() => handleDeleteProject(selectedProject.id)}>
+                  Удалить
+                </button>
+              </div>
+            )}
+
+            <div style={{ marginTop: '20px' }}>
+              <button onClick={handleCloseProjectDetails}>Закрыть</button>
+            </div>
           </div>
         </div>
       )}
