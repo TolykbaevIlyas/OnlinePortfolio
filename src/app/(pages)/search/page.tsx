@@ -128,7 +128,7 @@ const SearchPage = () => {
 
   // Переход к странице профиля
   const navigateToProfile = (id) => {
-    router.push(`/profile?id=${id}`);
+    router.push(`/resume?id=${id}`);
   };
 
   // Изменение страницы через пагинацию

@@ -1,3 +1,149 @@
+/* Корневой блок, в котором располагается вся страница кандидата */
+.Candidate {
+  background-color: var(--white);
+}
+
+/* Основной контейнер для отображения блока данных */
+.CandidateBlock {
+  padding-top: 200px;
+  background-color: var(--white);
+}
+
+/* Сетка и базовые стили для блока с информацией */
+.CandidateInfo {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Блок внутри CandidateInfo, где лежат основные сведения */
+.Candidate_info_block {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--ActayWide);
+  gap: 20px;
+}
+
+.candidate_name {
+  font-size: 40px;
+}
+.candidate_role {
+  font-size: 28px;
+  color: var(--accentColor);
+}
+.about_me {
+  font-size: 36px;
+}
+.candidate_location {
+  font-size: 20px;
+}
+
+/* Блок с опытом работы */
+.CandidateExperience {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: var(--ActayWide);
+}
+
+.Candidate_info_main {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.ExperienceContent {
+  font-size: 20px;
+  color: #50526F;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.experience_position {
+  font-weight: bold;
+  color: var(--accentColor);
+}
+.experience_responsibilities,
+.experience_description,
+.experience_dates {
+  margin-left: 10px;
+}
+
+/* Блок с социальными сетями */
+.CandidateSocialMedia {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--ActayWide);
+}
+
+.SocialMediaList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.SocialMediaItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  color: #50526F;
+}
+
+.media_key {
+  font-weight: bold;
+  color: var(--accentColor);
+}
+
+.media_value {
+  color: #007bff;
+  text-decoration: none;
+}
+.media_value:hover {
+  text-decoration: underline;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  // и т.д.
+}
+
+.btn {
+  padding: 15px 36px;
+  font-family: var(--ActayWide);
+  font-size: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  color: var(--white);
+  background-color: var(--accentColor);
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+
 .ProfileBlock{
     padding-top: 200px;
 }
@@ -33,8 +179,8 @@
 
 .ProfilePortfolio{
     margin-top: 40px;
-    display:flex;
-    flex-direction: column;
+    display:grid;
+    grid-template-columns: .33fr 1fr;
 }
 
 .Profile_info{
@@ -157,13 +303,6 @@
     }
   }
 
-  .ResumeList{
-    display: grid;
-    grid-template-columns: repeat(5,1fr);   
-    margin-top: 20px;
-    gap:20px;
-  }
-
 
   .ResumeCard {
     display: flex;
@@ -174,11 +313,8 @@
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 100%;
+    max-width: 400px;
     margin: auto;
-
-
   }
   
   .resume-header {
@@ -242,114 +378,3 @@
     background-color: #3730a3;
   }
 
-  .popup {
-    margin-top: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 20px; /* Отступ для маленьких экранов */
-    box-sizing: border-box;
-  }
-  
-  .popup-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 500px; /* Ограничение ширины для больших экранов */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .popup-content input,
-  .popup-content textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .popup-content button {
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4f46e5;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .popup-content button:hover {
-    background-color: #3730a3;
-  }
-  
-  .popup-content button:last-child {
-    background-color: #e53e3e;
-    color:white;
-  }
-  
-  .popup-content button:last-child:hover {
-    background-color: #c53030;
-    color: white;
-  }
-  
-  /* Адаптивные стили */
-  @media (max-width: 768px) {
-    .popup-content {
-      width: 100%;
-      max-width: 100%; /* На маленьких экранах попап занимает весь экран */
-      height: auto;
-      max-height: 90%;
-      overflow-y: auto; /* Прокрутка для длинных форм */
-      border-radius: 8px;
-    }
-  
-    .popup-content input,
-    .popup-content textarea {
-      font-size: 16px; /* Увеличенный шрифт для удобства на маленьких экранах */
-    }
-  
-    .popup-content button {
-      font-size: 16px;
-      padding: 14px; /* Увеличенные кнопки для удобства на мобильных устройствах */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .popup-content {
-      padding: 15px;
-      gap: 8px;
-    }
-  
-    .popup-content input,
-    .popup-content textarea {
-      font-size: 14px;
-    }
-  
-    .popup-content button {
-      font-size: 14px;
-      padding: 12px;
-    }
-  }
-
-  .add-resume-button{
-    padding: 20px;
-    width: 200px;
-    color: var(--white);
-    border-radius: 10px;
-    text-align: center;
-    margin:0 auto;
-    margin-top: 50px;   
-    background-color:var(--accentColor)
-  }
