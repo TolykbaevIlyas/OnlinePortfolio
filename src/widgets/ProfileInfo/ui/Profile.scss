@@ -4,7 +4,7 @@
 
 .ProfileInfo{
     display: grid;
-    grid-template-columns: 0.5fr 1fr 0.5fr;
+    // grid-template-columns: 0.5fr 1fr 0.5fr;
 }
 
 .Profile_info_block{
@@ -12,6 +12,7 @@
     flex-direction: column;
     font-family: var(--ActayWide);
     gap:20px;
+    text-align: center;
 }
 
 .profile_name{
@@ -353,3 +354,61 @@
     margin-top: 50px;   
     background-color:var(--accentColor)
   }
+
+
+
+
+  .Profile_info_main {
+    margin-top: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center; /* Центрирование заголовка */
+  }
+
+  .CommentsSection{
+        display:grid;
+        grid-template-columns: repeat(3,1fr);
+  }
+  
+  .CommentsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f7f9fc; /* Светлый фон для всей секции */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .CommentCard {
+    padding: 15px;
+    background-color: #ffffff; /* Белый фон для карточек */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .CommentCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Эффект наведения */
+  }
+  
+  .CommentCard p {
+    margin: 5px 0; /* Отступы между строками текста */
+    font-size: 1rem;
+    color: #555; /* Спокойный оттенок для текста */
+  }
+  
+  .CommentCard strong {
+    font-weight: bold;
+    color: #333; /* Более насыщенный цвет для ключевых слов */
+  }
+  
+  .CommentsSection p {
+    font-size: 1rem;
+    color: #777;
+    text-align: center; /* Выравнивание для сообщения "У вас пока нет сообщений" */
+  }
+  

@@ -6,11 +6,13 @@
     font-size: 20px;
     border-radius:10px;
     display: inline-block;
+    box-sizing:content-box;
     color:var(--white);
 }
 
 .BgStyles{
     background-color: var(--accentColor);
+    border: var(--accentColor) 5px solid;   
 }
 
 .TransparentStyles{

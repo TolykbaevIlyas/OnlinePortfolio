@@ -1,36 +1,68 @@
-.RegisterContainer{
+.RegisterContainer {
     display: flex; /* Устанавливаем Flexbox */
     justify-content: center; /* Горизонтальное центрирование */
     align-items: center; /* Вертикальное центрирование */
-    height: 100vh; /* Высота контейнера на всю высоту экрана */
+    min-height: 100vh; /* Высота контейнера на всю высоту экрана */
     width: 100%; /* Ширина контейнера на всю ширину экрана */
     background-color: #f9f9f9; /* Фон страницы (по желанию) */
-}
-
-.RegisterForm{
+    padding: 20px;
+  }
+  
+  .RegisterForm {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 700px;
-    max-height: 800px;
+    max-width: 500px; /* Уменьшаем максимальную ширину формы */
     background-color: var(--blockBgColor);
     border: var(--borderColor) 4px solid;
-    border-radius:10px;
-    padding: 50px;
-    gap:20px;
-    & > label{
-        display: flex;
-        flex-direction: column;
-        gap:10px;
-        font-family: var(--ActayWide);
-        font-size:25px;
-        & > input{
-            background-color: #F4F5FB;
-            border: #D0D3F1 4px solid;
-            width: 600px;
-            height: 82px;
-            border-radius: 10px;
-            padding:0 20px;
-        }
+    border-radius: 10px;
+    padding: 30px; /* Уменьшили padding, чтобы форма была компактнее */
+    gap: 20px;
+  
+    & > label {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--ActayWide);
+      font-size: 20px; /* Немного уменьшаем шрифт */
+  
+      & > input {
+        background-color: #F4F5FB;
+        border: #D0D3F1 4px solid;
+        width: 100%; /* Занимаем доступное пространство, но не выходим за рамки max-width родителя */
+        max-width: 100%; 
+        height: 50px; /* Уменьшили высоту */
+        border-radius: 10px;
+        padding: 0 20px;
+        font-size: 16px;
+      }
     }
-}
+  
+    /* Медиазапросы для адаптивности */
+    @media (max-width: 768px) {
+      max-width: 90%;
+      padding: 20px;
+  
+      & > label {
+        font-size: 18px;
+        & > input {
+          height: 45px;
+          font-size: 14px;
+        }
+      }
+    }
+  
+    @media (max-width: 480px) {
+      max-width: 95%;
+      padding: 15px;
+  
+      & > label {
+        font-size: 16px;
+        & > input {
+          height: 40px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  

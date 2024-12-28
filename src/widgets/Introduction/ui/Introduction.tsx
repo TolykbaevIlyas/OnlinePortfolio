@@ -15,8 +15,13 @@ const Introduction = () => {
                     Хотите создать портфолио и найти себе новую работу или показать работодателям что из себя стоите. Тогда вам нужен этот сайт, который поможет в этом 
                 </p>
                 <div className='Introduction_btns'>
-                    <Button type="Bg" text='Создать портфолио'/>
-                    <Button type="Transparent" text="Найти портфолио"/>
+                    <a href='/login'>
+                        <Button type="Bg" text='Создать портфолио'/>
+                    </a>
+                    <a href='/login'>
+                        <Button type="Transparent" text="Найти портфолио"/>
+                    </a>
+                    
                 </div>
             </article>
             <div className='Intro_humanImg'>

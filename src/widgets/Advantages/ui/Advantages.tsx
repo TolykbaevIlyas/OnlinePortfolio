@@ -14,7 +14,8 @@ const Advantages = () => {
     { src: "/assets/Images/Profile/profileImg.png", alt: "Первое изображение Тольятти" },
     { src: "/assets/Images/Profile/Mars.jpg", alt: "Первое изображение Тольятти" },
     { src: "/assets/Images/Profile/Baisa.jpg", alt: "Первое изображение Тольятти" },
-    { src: "/assets/Images/Profile/Said.jpg", alt: "Первое изображение Тольятти" }
+    { src: "/assets/Images/Profile/Said.jpg", alt: "Первое изображение Тольятти" },
+    { src: "/assets/Images/Profile/Zhanik.jpg", alt: "Первое изображение Тольятти" }
   ]
   
 
