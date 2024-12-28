@@ -156,3 +156,78 @@
       transform: scale(1);
     }
   }
+
+
+  .ResumeCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f7ff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+  }
+  
+  .resume-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .resume-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4f46e5;
+  }
+  
+  .resume-info {
+    text-align: left;
+  }
+  
+  .resume-info h3 {
+    font-size: 18px;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .resume-speciality {
+    font-size: 14px;
+    color: #4f46e5;
+    margin: 0;
+  }
+  
+  .resume-preview {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .resume-preview-img {
+    width: 45%;
+    border-radius: 5px;
+    object-fit: cover;
+    border: 1px solid #d1d5db;
+  }
+  
+  .resume-link {
+    display: inline-block;
+    background-color: #4f46e5;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .resume-link:hover {
+    background-color: #3730a3;
+  }

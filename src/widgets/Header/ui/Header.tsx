@@ -17,7 +17,9 @@ const Header = () => {
               <a href="/search">Поиск</a>
               <li></li>
               <li></li>
-              <li></li>
+              {userId ? <a href={`/profile?id=${userId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                Личный кабинет 
+              </a> : <></>}
               {userId ?  <></> : <a href="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Button text="Войти"/>
               </a> }
